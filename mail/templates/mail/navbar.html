@@ -1,0 +1,21 @@
+<ul class="nav flex-column ">
+    <span class="navbar-text">
+        Logged in: <br>{{ request.user.email }}
+    </span>
+    <li class="nav-item">
+        <button class="btn btn-lg " id="inbox">Inbox</button>
+    </li>
+    <li class="nav-item">
+        <button class="btn btn-lg " id="compose">Compose</button>
+    </li>
+    <li class="nav-item">
+        <button class="btn btn-lg " id="sent">Sent</button>
+    </li>
+    <li class="nav-item">
+        <button class="btn btn-lg " id="archived">Archived</button>
+    </li>
+    <li class="nav-item">
+        <a class="btn btn-lg red" href="{% url 'logout' %}">Log Out</a>
+    </li>
+    
+</ul>

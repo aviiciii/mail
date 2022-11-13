@@ -1,3 +1,84 @@
+body{
+    background-color: #222222;
+    color: aliceblue;
+}
 textarea {
     min-height: 400px;
+}
+
+
+/* column seperation */
+.row {
+    display: flex;
+    padding-top: 30px;
+}
+  
+.column {
+    float: left;
+}
+.left {
+  width: 25%;
+}
+
+.right {
+  width: 75%;
+}
+
+/* navbar */
+.left .btn {
+    border: none;
+    outline: none;
+    background: none;
+    color: #D7B472;
+    transition: 100ms;
+}
+.left .btn:hover {
+    color: antiquewhite;
+    transition: 100ms;
+}
+
+.left .navbar-text {
+    padding-left: 10px;
+    color: aliceblue;
+    font-size: 1.2rem;
+}
+
+.left .red:hover{
+    color: #F45F76;
+    transition: 100ms;
+}
+
+
+/* compose */
+#compose-view{
+    padding-top: 20px;
+}
+.btn-outline-light{
+    color: #D7B472;
+    border-color: #D7B472;
+    transition: 100ms;
+    font-weight: bold;
+}
+.btn-outline-light:hover{
+    border-color: aliceblue;
+    transition: 100ms;
+    
+}
+
+/* dark form input */
+.form-control {
+    background-color: #222222;
+    color: aliceblue;
+    border: none;
+    border: 1px solid  #80735b;
+    transition: 100ms;
+}
+.form-control:focus {
+    background-color: #bab09c;
+    border-color: #D7B472;
+    box-shadow: none;
+    color: black;
+}
+.form-control-plaintext{
+    color: antiquewhite;
 }
