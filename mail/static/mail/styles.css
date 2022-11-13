@@ -87,3 +87,15 @@ textarea {
 .form-control-plaintext{
     color: antiquewhite;
 }
+
+.list-group-item{
+    background-color: #222222;
+    color: aliceblue;
+    border: none;
+    border-bottom: 1px solid #80735b;
+    transition: 100ms;
+}
+.list-group-item:hover{
+    background-color: #bab09c;
+    transition: 100ms;
+}
