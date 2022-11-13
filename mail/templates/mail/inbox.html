@@ -16,33 +16,9 @@
             </div>
 
             <div id="compose-view">
-                <h3>New Email</h3>
-                <form id="compose-form">
-                    <!-- from -->
-                    <div class="mb-3 form-group">
-                        <label for="exampleFormControlInput1" class="form-label">From:</label>
-                        <input type="email" class="form-control-plaintext" id="from" placeholder="name@example.com" value="{{ request.user.email }}">
-                    </div>
-                    <!-- to -->
-                    <div class="mb-3 form-group">
-                        <label for="compose-recipients" class="form-label">To:</label>
-                        <input type="email" class="form-control" id="compose-recipients">
-                    </div>
-                    
-                    <!-- subject -->
-                    <div class="mb-3 form-group">
-                        
-                        <input type="email" class="form-control" id="compose-subject" placeholder="Subject">
-                    </div>
-            
-                    <!-- body -->
-                    <div class="mb-3 form-group">
-                        <textarea class="form-control" id="compose-body" placeholder="Body" rows="10"></textarea>
-                    </div>
-                        
+                {% include 'mail/compose.html' %}
 
-                    <input type="submit" class="btn btn-outline-light"/>
-                </form>
+
             </div>
         </div>
     </div>

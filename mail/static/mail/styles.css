@@ -6,6 +6,11 @@ textarea {
     min-height: 400px;
 }
 
+/* login */
+
+.login{
+    padding-top: 40px;
+}
 
 /* column seperation */
 .row {
