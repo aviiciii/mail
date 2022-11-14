@@ -34,7 +34,8 @@ document.addEventListener('DOMContentLoaded', function() {
 			fetch('/emails/'+element.dataset.email)
 			.then(response => response.json())
 			.then(email => {
-				console.log('getting email'+ email.archived)
+				console.log('archived: '+ email.archived)
+
 				if (email.archived === false) {
 					// archive
 					fetch('/emails/'+email.id, {
@@ -56,25 +57,65 @@ document.addEventListener('DOMContentLoaded', function() {
 					console.log('unarchived')
 				}
 			});
+			// adding delay for changes to reflect
+			delay(100).then(() => load_mailbox('inbox'));
+			
 		}
+		
+		// reply
+		if (element.id==='reply'){
+			// compose with pre-populated to, sub
+			compose_email(element.dataset.email)
+		}
+
 	});
+
 });
 
 
 
 
-
-function compose_email() {
+function compose_email(emailid=undefined) {
 
 	// Show compose view and hide other views
 	document.querySelector('#inbox-view').style.display = 'none';
 	document.querySelector('#email-view').style.display = 'none';
 	document.querySelector('#compose-view').style.display = 'block';
+	
+	if (emailid === undefined) {
+		// Clear out composition fields
+		document.querySelector('#compose-recipients').value = '';
+		document.querySelector('#compose-subject').value = '';
+		document.querySelector('#compose-body').value = '';
+	} else {
+		// Fetch email
+		fetch('/emails/'+emailid)
+		.then(response => response.json())
+		.then(email => {
+			// Print email
+			console.log(email);
+			
+			// Pre-polulate
+			document.querySelector('#compose-recipients').value = email.recipients;
+			document.querySelector('#compose-body').value = email.body;
 
-	// Clear out composition fields
-	document.querySelector('#compose-recipients').value = '';
-	document.querySelector('#compose-subject').value = '';
-	document.querySelector('#compose-body').value = '';
+			// Check subject reply
+			const search=email.subject.indexOf('Re: ')
+			console.log(search)
+			if (search === -1) {
+				document.querySelector('#compose-subject').value = 'Re: '+email.subject;
+			} else {
+				document.querySelector('#compose-subject').value = email.subject;
+				
+			}
+
+			
+		});
+		
+
+
+	}
+	
 
 
 	// Get fields
@@ -207,14 +248,21 @@ function view_email(emailid){
 		document.querySelector('#email-body').innerHTML= email.body;
 		document.querySelector('#email-time').innerHTML= email.timestamp;
 		document.querySelector('#reply').dataset.email= emailid;
-		if (email.archive === false) {
+		if (email.archived === false) {
 			document.querySelector('#archive').innerHTML= "Archive";
 			
 		} else {
-			document.querySelector('#archive').dataset.email= "Unarchive";
+			document.querySelector('#archive').innerHTML= "Unarchive";
 		}
 		document.querySelector('#archive').dataset.email= emailid;
 	});
-
-
 }
+
+
+// Delay function
+function delay(time) {
+	return new Promise(resolve => setTimeout(resolve, time));
+}
+  
+  
+
