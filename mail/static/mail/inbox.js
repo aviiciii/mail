@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	document.querySelector('#inbox').addEventListener('click', () => load_mailbox('inbox'));
 	document.querySelector('#sent').addEventListener('click', () => load_mailbox('sent'));
 	document.querySelector('#archived').addEventListener('click', () => load_mailbox('archive'));
-	document.querySelector('#compose').addEventListener('click', compose_email);
+	document.querySelector('#compose').addEventListener('click', () => compose_email(-1));
 
 	// By default, load the inbox
 	load_mailbox('inbox');
@@ -85,19 +85,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-function compose_email(emailid=undefined) {
+function compose_email(emailid) {
+
+	console.log(emailid)
 
 	// Show compose view and hide other views
 	document.querySelector('#inbox-view').style.display = 'none';
 	document.querySelector('#email-view').style.display = 'none';
 	document.querySelector('#compose-view').style.display = 'block';
 	
-	if (emailid === undefined) {
+	if (emailid === -1) {
+		console.log('going into if');
 		// Clear out composition fields
 		document.querySelector('#compose-recipients').value = '';
 		document.querySelector('#compose-subject').value = '';
 		document.querySelector('#compose-body').value = '';
 	} else {
+		console.log('going into else'+ emailid);
+
 		// Fetch email
 		fetch('/emails/'+emailid)
 		.then(response => response.json())
@@ -117,7 +122,6 @@ function compose_email(emailid=undefined) {
 				document.querySelector('#compose-subject').value = 'Re: ' + email.subject;
 			} else {
 				document.querySelector('#compose-subject').value = email.subject;
-				
 			}
 
 			// body
