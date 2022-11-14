@@ -68,9 +68,33 @@ function load_mailbox(mailbox) {
 		// emails not empty
 		if (emails.length > 0) {
 			const list = document.createElement('table');
-			list.className= "table table-dark table-striped table-hover";
+			list.className= "table table-dark table-hover";
 			list.id = "emails-table"
 			document.querySelector('#emails-view').append(list)
+
+			// create table header
+			const head = document.createElement('thead')
+			head.className="table-dark"
+			head.id = "emails-table-head"
+			document.querySelector('#emails-table').append(head)
+			
+			const sender = document.createElement('th');
+			const subject = document.createElement('th');
+			const time = document.createElement('th');
+			sender.scope = subject.scope=time.scope="col";
+
+			sender.innerHTML = 'From';
+			subject.innerHTML = 'Subject';
+			time.innerHTML = 'Time';
+			document.querySelector('#emails-table-head').append(sender)
+			document.querySelector('#emails-table-head').append(subject)
+			document.querySelector('#emails-table-head').append(time)
+
+			// create body
+			const body = document.createElement('tbody')
+			body.id = "emails-table-body"
+			document.querySelector('#emails-table').append(body)
+
 			// iterate over emails
 			for (let index = 0; index < emails.length; index++) {
 				const mail = emails[index];
@@ -78,7 +102,7 @@ function load_mailbox(mailbox) {
 				const row = document.createElement('tr');
 				row.className = "table-dark";
 				row.id='t'+index;
-				document.querySelector('#emails-table').append(row)
+				document.querySelector('#emails-table-body').append(row)
 
 				// create cells
 				const sender = document.createElement('td');
