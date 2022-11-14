@@ -96,18 +96,23 @@ function compose_email(emailid=undefined) {
 			console.log(email);
 			
 			// Pre-polulate
-			document.querySelector('#compose-recipients').value = email.recipients;
-			document.querySelector('#compose-body').value = email.body;
-
-			// Check subject reply
+			// recipients
+			document.querySelector('#compose-recipients').value = email.sender;
+			
+			
+			// subject
 			const search=email.subject.indexOf('Re: ')
 			console.log(search)
 			if (search === -1) {
-				document.querySelector('#compose-subject').value = 'Re: '+email.subject;
+				document.querySelector('#compose-subject').value = 'Re: ' + email.subject;
 			} else {
 				document.querySelector('#compose-subject').value = email.subject;
 				
 			}
+			
+			// body
+			const email_body = 'On ' + email.timestamp +', '+ email.sender+ ' wrote: \n' + email.body;
+			document.querySelector('#compose-body').value =email_body;
 
 			
 		});
