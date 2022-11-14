@@ -8,6 +8,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	// By default, load the inbox
 	load_mailbox('inbox');
+
+	// listen for clicked rows
+	document.addEventListener('click', event => {
+
+		// Find what was clicked on
+		const element = event.target;
+		
+
+		// Check if the user clicked on a hide button
+		if (element.className === 'table-dark') {
+			// print email id
+			console.log(element.parentElement.dataset.id);
+		}
+		
+	});
+	
 });
 
 function compose_email() {
@@ -98,9 +114,11 @@ function load_mailbox(mailbox) {
 			// iterate over emails
 			for (let index = 0; index < emails.length; index++) {
 				const mail = emails[index];
+
 				// create row
 				const row = document.createElement('tr');
-				row.className = "table-dark";
+				row.className = "table-dark clickable-row";
+				row.dataset.id=mail.id;
 				row.id='t'+index;
 				document.querySelector('#emails-table-body').append(row)
 

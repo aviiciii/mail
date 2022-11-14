@@ -99,3 +99,8 @@ textarea {
     background-color: #bab09c;
     transition: 100ms;
 }
+
+.clickable-row{
+    cursor: pointer;
+    
+}
