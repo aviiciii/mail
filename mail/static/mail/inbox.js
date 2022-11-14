@@ -258,7 +258,8 @@ function view_email(emailid){
 	.then(response => response.json())
 	.then(email => {
 		// Print email
-		console.log(email.sender);
+		console.log(email);
+		
 
 		// Fill email
 		document.querySelector('#email-from').innerHTML= email.sender;
@@ -274,6 +275,18 @@ function view_email(emailid){
 			document.querySelector('#archive').innerHTML= "Unarchive";
 		}
 		document.querySelector('#archive').dataset.email= emailid;
+
+		
+		// check if sent mail
+
+		if (email.sender === document.querySelector('#logged-in').dataset.useremail) {
+			document.querySelector('#email-buttons').style.display = 'none';
+
+		} else {
+			document.querySelector('#email-buttons').style.display = 'block';
+		}
+
+
 	});
 }
 

@@ -1,5 +1,5 @@
 <ul class="nav flex-column ">
-    <span class="navbar-text">
+    <span id="logged-in" class="navbar-text" data-useremail="{{ request.user.email }}">
         Logged in: <br>{{ request.user.email }}
     </span>
     <li class="nav-item">
