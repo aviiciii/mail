@@ -192,6 +192,7 @@ function load_mailbox(mailbox) {
 			head.className="table-dark"
 			head.id = "emails-table-head"
 			document.querySelector('#emails-table').append(head)
+			
 			// table header row
 			const headrow = document.createElement('tr')
 			headrow.id = "emails-table-head-row"
