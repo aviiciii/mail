@@ -138,7 +138,8 @@ function compose_email(emailid) {
 
 
 	// Get fields
-	document.querySelector('form').onsubmit = function() {
+	document.querySelector('#compose-form').onsubmit = function(event) {
+		event.preventDefault();
 		const recipients = document.querySelector('#compose-recipients').value;
 		const subject = document.querySelector('#compose-subject').value;
 		const body = document.querySelector('#compose-body').value;
@@ -156,6 +157,7 @@ function compose_email(emailid) {
 		.then(result => {
 			// Print result
 			console.log(result);
+			load_mailbox('sent');
 		});
 	}
 }
