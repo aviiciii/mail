@@ -35,11 +35,11 @@ textarea {
     outline: none;
     background: none;
     color: #D7B472;
-    transition: 100ms;
+    transition: 300ms;
 }
 .left .btn:hover {
     color: antiquewhite;
-    transition: 100ms;
+    transition: 300ms;
 }
 
 .left .navbar-text {
