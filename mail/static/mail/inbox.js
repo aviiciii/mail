@@ -22,12 +22,47 @@ document.addEventListener('DOMContentLoaded', function() {
 			// print email id
 			console.log(element.parentElement.dataset.id);
 			// open email
-			view_email(element.parentElement.dataset.id)
+			view_email(element.parentElement.dataset.id);
 		}
-		
+		// EMAIL
+		// archive
+		if (element.id==='archive'){
+			// print email id
+			console.log(element.dataset.email);
+
+			// get email
+			fetch('/emails/'+element.dataset.email)
+			.then(response => response.json())
+			.then(email => {
+				console.log('getting email'+ email.archived)
+				if (email.archived === false) {
+					// archive
+					fetch('/emails/'+email.id, {
+						method: 'PUT',
+						body: JSON.stringify({
+							archived: true
+						})
+					})
+					console.log('archived')
+				}
+				else{
+					// unarchive
+					fetch('/emails/'+email.id, {
+						method: 'PUT',
+						body: JSON.stringify({
+							archived: false
+						})
+					})
+					console.log('unarchived')
+				}
+			});
+		}
 	});
-	
 });
+
+
+
+
 
 function compose_email() {
 
@@ -172,8 +207,13 @@ function view_email(emailid){
 		document.querySelector('#email-body').innerHTML= email.body;
 		document.querySelector('#email-time').innerHTML= email.timestamp;
 		document.querySelector('#reply').dataset.email= emailid;
-
-		
+		if (email.archive === false) {
+			document.querySelector('#archive').innerHTML= "Archive";
+			
+		} else {
+			document.querySelector('#archive').dataset.email= "Unarchive";
+		}
+		document.querySelector('#archive').dataset.email= emailid;
 	});
 
 
