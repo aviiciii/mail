@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			// print email id
 			console.log(element.parentElement.dataset.id);
 			// open email
-			window.location='emails/'+element.parentElement.dataset.id
+			view_email(element.parentElement.dataset.id)
 		}
 		
 	});
@@ -32,7 +32,8 @@ document.addEventListener('DOMContentLoaded', function() {
 function compose_email() {
 
 	// Show compose view and hide other views
-	document.querySelector('#emails-view').style.display = 'none';
+	document.querySelector('#inbox-view').style.display = 'none';
+	document.querySelector('#email-view').style.display = 'none';
 	document.querySelector('#compose-view').style.display = 'block';
 
 	// Clear out composition fields
@@ -62,20 +63,18 @@ function compose_email() {
 			console.log(result);
 		});
 	}
-
-	
-  
-
 }
 
 function load_mailbox(mailbox) {
   
 	// Show the mailbox and hide other views
-	document.querySelector('#emails-view').style.display = 'block';
+	document.querySelector('#inbox-view').style.display = 'block';
 	document.querySelector('#compose-view').style.display = 'none';
+	document.querySelector('#email-view').style.display = 'none';
+
 
 	// Show the mailbox name
-	document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
+	document.querySelector('#inbox-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
 
 	if (mailbox === 'inbox'){
 		
@@ -92,7 +91,7 @@ function load_mailbox(mailbox) {
 			const list = document.createElement('table');
 			list.className= "table table-dark table-hover";
 			list.id = "emails-table"
-			document.querySelector('#emails-view').append(list)
+			document.querySelector('#inbox-view').append(list)
 
 			// create table header
 			const head = document.createElement('thead')
@@ -148,10 +147,34 @@ function load_mailbox(mailbox) {
 				document.querySelector('#t'+index).append(sender)
 				document.querySelector('#t'+index).append(subject)
 				document.querySelector('#t'+index).append(time)
-
 			}
-			
 		}
 	});
+}
+
+function view_email(emailid){
+	// Show email view and hide other views
+	document.querySelector('#inbox-view').style.display = 'none';
+	document.querySelector('#email-view').style.display = 'block';
+	document.querySelector('#compose-view').style.display = 'none';
+
+	// get email
+	fetch('/emails/'+emailid)
+	.then(response => response.json())
+	.then(email => {
+		// Print email
+		console.log(email.sender);
+
+		// Fill email
+		document.querySelector('#email-from').innerHTML= email.sender;
+		document.querySelector('#email-recipients').innerHTML= email.recipients;
+		document.querySelector('#email-subject').innerHTML= email.subject;
+		document.querySelector('#email-body').innerHTML= email.body;
+		document.querySelector('#email-time').innerHTML= email.timestamp;
+		document.querySelector('#reply').dataset.email= emailid;
+
+		
+	});
+
 
 }

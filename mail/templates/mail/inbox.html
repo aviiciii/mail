@@ -12,17 +12,18 @@
         <div class="column right">
             <hr>
 
-            <div id="emails-view">
-                <ul id="emails-list" class="list-group list-group-flush">
-                    <li>dummy</li>
-                <ul>
+            <div id="inbox-view">
+                
             </div>
 
             <div id="compose-view">
                 {% include 'mail/compose.html' %}
-
-
             </div>
+
+            <div id="email-view">
+                {% include 'mail/email.html' %}
+            </div>
+
         </div>
     </div>
 {% endblock %}
