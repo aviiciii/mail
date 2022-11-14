@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', function() {
 	// By default, load the inbox
 	load_mailbox('inbox');
 
-
 	// INBOX
 	// listen for clicked rows
 	document.addEventListener('click', event => {
@@ -67,22 +66,14 @@ document.addEventListener('DOMContentLoaded', function() {
 			});
 			// adding delay for changes to reflect
 			delay(100).then(() => load_mailbox('inbox'));
-			
 		}
-		
 		// reply
 		if (element.id==='reply'){
 			// compose with pre-populated to, sub
 			compose_email(element.dataset.email)
 		}
-
-		
-
 	});
-
 });
-
-
 
 
 function compose_email(emailid) {
@@ -113,11 +104,9 @@ function compose_email(emailid) {
 			// Pre-polulate
 			// recipients
 			document.querySelector('#compose-recipients').value = email.sender;
-			
-			
+
 			// subject
 			const search=email.subject.indexOf('Re: ')
-			console.log(search)
 			if (search === -1) {
 				document.querySelector('#compose-subject').value = 'Re: ' + email.subject;
 			} else {
@@ -128,11 +117,7 @@ function compose_email(emailid) {
 			const email_body = 'On ' + email.timestamp +', '+ email.sender+ ' wrote: \n' + email.body;
 			document.querySelector('#compose-body').value =email_body;
 
-			
 		});
-		
-
-
 	}
 	
 
@@ -157,7 +142,8 @@ function compose_email(emailid) {
 		.then(result => {
 			// Print result
 			console.log(result);
-			load_mailbox('sent');
+			// adding delay for changes to reflect
+			delay(100).then(() => load_mailbox('sent'));
 		});
 	}
 }
@@ -228,8 +214,6 @@ function load_mailbox(mailbox) {
 			for (let index = 0; index < emails.length; index++) {
 				const mail = emails[index];
 
-			
-
 				// create row
 				const row = document.createElement('tr');
 				// check email read
@@ -241,8 +225,6 @@ function load_mailbox(mailbox) {
 				row.dataset.id=mail.id;
 				row.id='t'+index;
 				document.querySelector('#emails-table-body').append(row)
-
-				
 
 				// create cells
 				const sender = document.createElement('td');
@@ -266,7 +248,6 @@ function load_mailbox(mailbox) {
 				subject.innerHTML = mail.subject;
 				time.innerHTML = mail.timestamp;
 
-
 				// append cells
 				document.querySelector('#t'+index).append(sender)
 				document.querySelector('#t'+index).append(subject)
@@ -275,6 +256,7 @@ function load_mailbox(mailbox) {
 		}
 	});
 }
+
 
 function view_email(emailid){
 	// Show email view and hide other views
@@ -288,7 +270,6 @@ function view_email(emailid){
 	.then(email => {
 		// Print email
 		console.log(email);
-		
 
 		// Fill email
 		document.querySelector('#email-from').innerHTML= email.sender;
@@ -305,7 +286,6 @@ function view_email(emailid){
 		}
 		document.querySelector('#archive').dataset.email= emailid;
 
-		
 		// check if sent mail
 
 		if (email.sender === document.querySelector('#logged-in').dataset.useremail) {
@@ -314,8 +294,6 @@ function view_email(emailid){
 		} else {
 			document.querySelector('#email-buttons').style.display = 'block';
 		}
-
-
 	});
 }
 
