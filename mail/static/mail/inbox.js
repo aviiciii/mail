@@ -9,17 +9,20 @@ document.addEventListener('DOMContentLoaded', function() {
 	// By default, load the inbox
 	load_mailbox('inbox');
 
+
+	// INBOX
 	// listen for clicked rows
 	document.addEventListener('click', event => {
 
 		// Find what was clicked on
 		const element = event.target;
-		
 
 		// Check if the user clicked on a hide button
 		if (element.className === 'table-dark') {
 			// print email id
 			console.log(element.parentElement.dataset.id);
+			// open email
+			window.location='emails/'+element.parentElement.dataset.id
 		}
 		
 	});
@@ -74,7 +77,10 @@ function load_mailbox(mailbox) {
 	// Show the mailbox name
 	document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
 
-	fetch('/emails/inbox')
+	if (mailbox === 'inbox'){
+		
+	} 
+	fetch('/emails/'+mailbox)
 	.then(response => response.json())
 	.then(emails => {
 		// Print emails
@@ -99,7 +105,12 @@ function load_mailbox(mailbox) {
 			const time = document.createElement('th');
 			sender.scope = subject.scope=time.scope="col";
 
-			sender.innerHTML = 'From';
+			if (mailbox==='sent') {
+				sender.innerHTML='To';
+			}
+			else{
+				sender.innerHTML = 'From';
+			}
 			subject.innerHTML = 'Subject';
 			time.innerHTML = 'Time';
 			document.querySelector('#emails-table-head').append(sender)
