@@ -17,13 +17,21 @@ document.addEventListener('DOMContentLoaded', function() {
 		// Find what was clicked on
 		const element = event.target;
 
-		// Check if the user clicked on a hide button
+		// Check if the user clicked on a table row
 		if (element.className === 'table-dark') {
 			// print email id
 			console.log(element.parentElement.dataset.id);
 			// open email
+			// read status 
+			fetch('/emails/'+element.parentElement.dataset.id, {
+				method: 'PUT',
+				body: JSON.stringify({
+					read: true
+				})
+			})
 			view_email(element.parentElement.dataset.id);
 		}
+		
 		// EMAIL
 		// archive
 		if (element.id==='archive'){
@@ -68,6 +76,8 @@ document.addEventListener('DOMContentLoaded', function() {
 			compose_email(element.dataset.email)
 		}
 
+		
+
 	});
 
 });
@@ -109,7 +119,7 @@ function compose_email(emailid=undefined) {
 				document.querySelector('#compose-subject').value = email.subject;
 				
 			}
-			
+
 			// body
 			const email_body = 'On ' + email.timestamp +', '+ email.sender+ ' wrote: \n' + email.body;
 			document.querySelector('#compose-body').value =email_body;
