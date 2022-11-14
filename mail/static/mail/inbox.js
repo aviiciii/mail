@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		const element = event.target;
 
 		// Check if the user clicked on a table row
-		if (element.className === 'table-dark') {
+		if (element.className === 'table-dark' || element.className==='table-light') {
 			// print email id
 			console.log(element.parentElement.dataset.id);
 			// open email
@@ -170,10 +170,9 @@ function load_mailbox(mailbox) {
 
 	// Show the mailbox name
 	document.querySelector('#inbox-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
+	
+	document.querySelector('#inbox-view').append(document.createElement('br'))
 
-	if (mailbox === 'inbox'){
-		
-	} 
 	fetch('/emails/'+mailbox)
 	.then(response => response.json())
 	.then(emails => {
@@ -193,7 +192,12 @@ function load_mailbox(mailbox) {
 			head.className="table-dark"
 			head.id = "emails-table-head"
 			document.querySelector('#emails-table').append(head)
+			// table header row
+			const headrow = document.createElement('tr')
+			headrow.id = "emails-table-head-row"
+			document.querySelector('#emails-table-head').append(headrow)
 			
+			// table header columns
 			const sender = document.createElement('th');
 			const subject = document.createElement('th');
 			const time = document.createElement('th');
@@ -207,36 +211,52 @@ function load_mailbox(mailbox) {
 			}
 			subject.innerHTML = 'Subject';
 			time.innerHTML = 'Time';
-			document.querySelector('#emails-table-head').append(sender)
-			document.querySelector('#emails-table-head').append(subject)
-			document.querySelector('#emails-table-head').append(time)
+			document.querySelector('#emails-table-head-row').append(sender)
+			document.querySelector('#emails-table-head-row').append(subject)
+			document.querySelector('#emails-table-head-row').append(time)
 
-			// create body
+			// table body
 			const body = document.createElement('tbody')
+			body.className="table-group-divider"
 			body.id = "emails-table-body"
 			document.querySelector('#emails-table').append(body)
 
-			// iterate over emails
+			// iterate over emails - table rows
 			for (let index = 0; index < emails.length; index++) {
 				const mail = emails[index];
 
+			
+
 				// create row
 				const row = document.createElement('tr');
-				row.className = "table-dark clickable-row";
+				// check email read
+				if (mail.read === true) {
+					row.className = "table-dark clickable-row";
+				} else {
+					row.className = "table-light clickable-row";
+				}
 				row.dataset.id=mail.id;
 				row.id='t'+index;
 				document.querySelector('#emails-table-body').append(row)
+
+				
 
 				// create cells
 				const sender = document.createElement('td');
 				const subject = document.createElement('td');
 				const time = document.createElement('td');
 
-				sender.className= subject.className = time.className = "table-dark";
+				// check email read
+				if (mail.read === true) {
+					sender.className= subject.className = time.className = "table-dark";
+				} else {
+					sender.className= subject.className = time.className = "table-light";
+				}
 
 				sender.innerHTML = mail.sender;
 				subject.innerHTML = mail.subject;
 				time.innerHTML = mail.timestamp;
+
 
 				// append cells
 				document.querySelector('#t'+index).append(sender)
