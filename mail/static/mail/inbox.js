@@ -254,7 +254,13 @@ function load_mailbox(mailbox) {
 					sender.className= subject.className = time.className = "table-light";
 				}
 
-				sender.innerHTML = mail.sender;
+				if (mailbox==='sent') {
+					sender.innerHTML=mail.recipients;
+				}
+				else{
+					sender.innerHTML = mail.sender;
+				}
+				
 				subject.innerHTML = mail.subject;
 				time.innerHTML = mail.timestamp;
 
